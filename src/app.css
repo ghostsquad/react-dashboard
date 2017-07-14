@@ -1,0 +1,8 @@
+@value app-max-width from "_/globals.css";
+
+.contentBody,
+.footerBody {
+  max-width: app-max-width;
+  padding-left: 0px;
+  padding-right: 0px;
+}
