@@ -4,25 +4,32 @@ import {
   Row
 } from 'reactstrap';
 
-import Component from '_/lib/component';
 import Config from './config';
 import HeaderRow from '_/components/header/header_row';
-
+import PropTypes from '_/proptypes';
 import React from 'react';
 
 import styles from './app.css';
 
-class App extends Component {
+// -------------------------------------------------------------------------- //
+
+class App extends React.Component {
+  static get propTypes() {
+    return {
+      ...super.propTypes,
+    };
+  }
+
   render() {
     let maxWidth = 12;
 
     return (
       <Container fluid={true}>
-        <HeaderRow maxWidth={maxWidth} title={Config.title} pages={Config.pages}/>
+        <HeaderRow title={Config.title} />
         <Row>
           <Col lg={{size: maxWidth}}>
             <Container className={styles.contentBody}>
-              <div className={this.bem('top-content')}><p>Lorem Ipsum</p></div>
+              <div className='top-content'><p>Lorem Ipsum</p></div>
             </Container>
           </Col>
         </Row>
@@ -37,5 +44,9 @@ class App extends Component {
     );
   }
 }
+
+App.childContextTypes = {
+  store: PropTypes.object
+};
 
 export default App;

@@ -7,6 +7,9 @@ const modulesDirectory = path.resolve(__dirname, 'node_modules');
 const sourceDirectory = path.resolve(__dirname, 'src');
 const targetDirectory = __dirname;
 
+// Import the plugin:
+const DashboardPlugin = require('webpack-dashboard/plugin');
+
 const imgPath = path.join(__dirname, 'img');
 
 var loaderOptions = {
@@ -54,7 +57,8 @@ module.exports = {
   },
   devtool: "source-map", // any "source-map"-like devtool is possible
   plugins: [
-    isProduction && new webpack.optimize.UglifyJsPlugin()
+    isProduction && new webpack.optimize.UglifyJsPlugin(),
+    new DashboardPlugin()
   ].filter(Boolean),
   module: {
     rules: [

@@ -5,33 +5,32 @@ import {
   Row
 } from 'reactstrap';
 
-import Component from '_/lib/component';
 import Nav from './nav';
-import PropTypes from '_/lib/proptypes';
+import PropTypes from '_/proptypes';
 import React from 'react';
 
 import styles from './header_row.css';
 
-class HeaderRow extends Component {
+class HeaderRow extends React.Component {
   static get propTypes() {
     return {
       ...super.propTypes,
-      maxWidth: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      pages: PropTypes.arrayOf(PropTypes.page)
+      maxWidth: PropTypes.number,
+      title: PropTypes.string.isRequired
     };
   }
 
   render() {
     const { props } = this;
-    const { maxWidth, title, pages } = props;
+    const { maxWidth, title } = props;
 
     return (
       <Row className={styles.main}>
         <Col md={{size: maxWidth}}>
           <Container className={styles.body}>
             <NavbarBrand href="/">{title}</NavbarBrand>
-            <Nav pages={pages}/>
+            Lorem Ipsum
+            <Nav/>
           </Container>
         </Col>
       </Row>

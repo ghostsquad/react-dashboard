@@ -46,7 +46,7 @@ module.exports = {
     'prefer-rest-params': ['error'],
     'prefer-spread': ['error'],
     'prefer-template': ['error'],
-    'sort-imports': ['error'],
+    'sort-imports': ['off'],
     'symbol-description': ['error'],
     'no-confusing-arrow': ['error'],
     yoda: ['error', 'never', { exceptRange: true }]

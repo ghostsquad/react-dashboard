@@ -1,11 +1,5 @@
-@value app-max-width, header-bg-color from "_/globals.css";
-
-.main {
-  background-color: header-bg-color;
-}
-
 .body {
-  max-width: app-max-width;
+  background-color: #9da0a4;
   padding-left: 0px;
   padding-right: 0px;
 }

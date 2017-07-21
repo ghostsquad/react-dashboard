@@ -7,13 +7,12 @@ import {
   Nav as ReactNav
 } from 'reactstrap';
 
-import Component from '_/lib/component';
-import PropTypes from '_/lib/proptypes';
+import PropTypes from '_/proptypes';
 import React from 'react';
 
 import styles from './nav.css';
 
-class Nav extends Component {
+class Nav extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,19 +35,25 @@ class Nav extends Component {
     });
   }
 
+  nav_items(pages) {
+    pages.forEach((p) => {
+      return (
+        <NavItem>
+          <NavLink href={p.href}>{p.title}</NavLink>
+        </NavItem>
+      );
+    });
+  }
+
   render() {
+    //const { props } = this;
+    //const { pages } = props;
+
     return (
       <Navbar className={styles.main} color="faded" light toggleable>
         <NavbarToggler left onClick={this.toggle}/>
         <Collapse navbar isOpen={this.state.isOpen}>
-          <ReactNav tabs>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">Github</NavLink>
-            </NavItem>
-          </ReactNav>
+          <ReactNav tabs>Lorem Ipsum</ReactNav>
         </Collapse>
       </Navbar>
     );
