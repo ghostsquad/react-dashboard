@@ -2,9 +2,9 @@ import {
   Container
 } from 'reactstrap';
 
-import React from 'react';
+import preact from 'preact';
 
-class Login extends React.Component {
+class Login extends preact.Component {
   render() {
     return (
       <Container>Lorem Ipsum</Container>

@@ -24,6 +24,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
+    'no-console': ['warn'],
     'no-duplicate-imports': ['error'],
     'no-else-return': ['error'],
     'no-iterator': ['error'],
@@ -49,6 +50,7 @@ module.exports = {
     'sort-imports': ['off'],
     'symbol-description': ['error'],
     'no-confusing-arrow': ['error'],
+    'react/react-in-jsx-scope': ['off'],
     yoda: ['error', 'never', { exceptRange: true }]
   }
 };

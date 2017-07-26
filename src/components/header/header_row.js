@@ -7,22 +7,24 @@ import {
 
 import Nav from './nav';
 import PropTypes from '_/proptypes';
-import React from 'react';
+import preact from 'preact';
 
 import styles from './header_row.css';
 
-class HeaderRow extends React.Component {
+class HeaderRow extends preact.Component {
   static get propTypes() {
     return {
       ...super.propTypes,
+      //match: PropTypes.shape.isRequired,
       maxWidth: PropTypes.number,
       title: PropTypes.string.isRequired
     };
   }
 
-  render() {
-    const { props } = this;
-    const { maxWidth, title } = props;
+  render(props) {
+    const { match, maxWidth, title } = props;
+
+    console.log(props);
 
     return (
       <Row className={styles.main}>
@@ -30,7 +32,7 @@ class HeaderRow extends React.Component {
           <Container className={styles.body}>
             <NavbarBrand href="/">{title}</NavbarBrand>
             Lorem Ipsum
-            <Nav/>
+            <Nav match={match}/>
           </Container>
         </Col>
       </Row>

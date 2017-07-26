@@ -12,12 +12,12 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const imgPath = path.join(__dirname, 'img');
 
-var loaderOptions = {
+let loaderOptions = {
   mozjpeg: {
     quality: 65
   },
   pngquant:{
-    quality: "65-90",
+    quality: '65-90',
     speed: 4
   },
   svgo:{
@@ -40,7 +40,7 @@ var loaderOptions = {
   }
 };
 
-var fileLoaderOptions = {
+let fileLoaderOptions = {
   hash: 'sha512',
   digest: 'hex',
   name: '[path][name].[ext]?[hash]'
@@ -53,9 +53,13 @@ module.exports = {
   ],
   output: {
     path: targetDirectory,
-    filename: 'index.js'
+    filename: 'index.js',
+    publicPath: '/'
   },
-  devtool: "source-map", // any "source-map"-like devtool is possible
+  devtool: 'source-map', // any "source-map"-like devtool is possible
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     isProduction && new webpack.optimize.UglifyJsPlugin(),
     new DashboardPlugin()
@@ -74,9 +78,9 @@ module.exports = {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
-          { loader: "style-loader" },
+          { loader: 'style-loader' },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               modules: true,
               localIdentName: '[name]__[local]___[hash:base64:5]'
@@ -88,8 +92,8 @@ module.exports = {
         test: /\.css$/,
         include: /node_modules/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" }
+          { loader: 'style-loader' },
+          { loader: 'css-loader' }
         ]
       },
       {
@@ -105,7 +109,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.jpeg', '.jpg', '.png', '.gif', '.svg'],
-    alias: { _: sourceDirectory },
+    alias: {
+      '_': sourceDirectory,
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    },
     modules: [modulesDirectory]
   }
 };

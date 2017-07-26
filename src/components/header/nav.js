@@ -7,12 +7,14 @@ import {
   Nav as ReactNav
 } from 'reactstrap';
 
-import PropTypes from '_/proptypes';
-import React from 'react';
+import { Link } from 'react-router-dom';
+
+//import PropTypes from '_/proptypes';
+import preact from 'preact';
 
 import styles from './nav.css';
 
-class Nav extends React.Component {
+class Nav extends preact.Component {
   constructor(props) {
     super(props);
 
@@ -22,38 +24,35 @@ class Nav extends React.Component {
     };
   }
 
-  static get propTypes() {
-    return {
-      ...super.propTypes,
-      pages: PropTypes.arrayOf(PropTypes.page)
-    };
-  }
-
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
-  nav_items(pages) {
-    pages.forEach((p) => {
-      return (
-        <NavItem>
-          <NavLink href={p.href}>{p.title}</NavLink>
-        </NavItem>
-      );
-    });
-  }
-
-  render() {
+  render(props) {
     //const { props } = this;
     //const { pages } = props;
+
+    console.log(props);
+
+    const { match } = props;
 
     return (
       <Navbar className={styles.main} color="faded" light toggleable>
         <NavbarToggler left onClick={this.toggle}/>
         <Collapse navbar isOpen={this.state.isOpen}>
-          <ReactNav tabs>Lorem Ipsum</ReactNav>
+          <ReactNav tabs>
+            <NavItem>
+              <NavLink tag={Link} to="/" active={match.location.pathname === '/'}>Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/repos" active={match.location.pathname === '/repos'}>Repos</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/about" active={match.location.pathname === '/about'}>About</NavLink>
+            </NavItem>
+          </ReactNav>
         </Collapse>
       </Navbar>
     );
