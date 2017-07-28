@@ -1,50 +1,20 @@
 const isProduction = process.env.NODE_ENV === 'production';
+
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const packageConfig = require('./package.json');
+
 const modulesDirectory = path.resolve(__dirname, 'node_modules');
 const sourceDirectory = path.resolve(__dirname, 'src');
-const targetDirectory = __dirname;
+const staticDirectory = path.resolve(__dirname, 'static');
+const distDirectory = path.resolve(__dirname, 'dist');
 
-// Import the plugin:
-const DashboardPlugin = require('webpack-dashboard/plugin');
-
-const imgPath = path.join(__dirname, 'img');
-
-let loaderOptions = {
-  mozjpeg: {
-    quality: 65
-  },
-  pngquant:{
-    quality: '65-90',
-    speed: 4
-  },
-  svgo:{
-    plugins: [
-      {
-        removeViewBox: false
-      },
-      {
-        removeEmptyAttrs: false
-      }
-    ]
-  },
-  gifsicle: {
-    optimizationLevel: 7,
-    interlaced: false
-  },
-  optipng: {
-    optimizationLevel: 7,
-    interlaced: false
-  }
-};
-
-let fileLoaderOptions = {
-  hash: 'sha512',
-  digest: 'hex',
-  name: '[path][name].[ext]?[hash]'
-};
+// -------------------------------------------------------------------------- //
 
 module.exports = {
   entry: [
@@ -52,7 +22,7 @@ module.exports = {
     path.resolve(sourceDirectory, 'index.js')
   ],
   output: {
-    path: targetDirectory,
+    path: distDirectory,
     filename: 'index.js',
     publicPath: '/'
   },
@@ -60,30 +30,32 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-  plugins: [
-    isProduction && new webpack.optimize.UglifyJsPlugin(),
-    new DashboardPlugin()
-  ].filter(Boolean),
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
+        enforce: 'pre',
         use: [
-          { loader: 'babel-loader', options: { cacheDirectory: true } },
-          { loader: 'eslint-loader' }
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
+          },
+          {
+            loader: 'eslint-loader'
+          }
         ],
       },
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
+        test: /\.(ico|eot|otf|webp|ttf|woff2?|gif|png|jpe?g|svg)$/i,
         use: [
-          { loader: 'style-loader' },
           {
-            loader: 'css-loader',
+            loader: 'file-loader',
             options: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
+              limit: 100000,
+              name: 'assets/[name].[sha1:hash:base64:8].[ext]'
             }
           }
         ]
@@ -92,28 +64,77 @@ module.exports = {
         test: /\.css$/,
         include: /node_modules/,
         use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'resolve-url-loader'
+          }
         ]
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           {
-            loader: 'file-loader',
-            options: fileLoaderOptions
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'resolve-url-loader'
           }
         ]
       }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.jpeg', '.jpg', '.png', '.gif', '.svg'],
+    extensions: ['.js', '.jsx', '.json', '.css', '.jpeg', '.jpg', '.png', '.gif', '.svg'],
     alias: {
       '_': sourceDirectory,
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     },
-    modules: [modulesDirectory]
-  }
+    modules: [
+      sourceDirectory,
+      modulesDirectory
+    ]
+  },
+  plugins: [
+    new DashboardPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: staticDirectory,
+        to: './'
+      }
+    ]),
+    new HtmlWebpackPlugin({
+      title: 'React Dashboard',
+      filename: path.resolve(distDirectory, 'index.html')
+    }),
+    new ManifestPlugin()
+  ]
 };

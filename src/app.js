@@ -4,27 +4,23 @@ import {
   Row
 } from 'reactstrap';
 
-import Config from './config';
-import HeaderRow from '_/components/header/header_row';
+import Nav from '_/components/nav';
 import PropTypes from '_/proptypes';
 import preact from 'preact';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import config from '_/config';
 
 import styles from './app.css';
 
 // -------------------------------------------------------------------------- //
 
-class Repos extends preact.Component {
-  render() {
-    return (<h1>Repos</h1>);
-  }
-}
-
-class About extends preact.Component {
-  render() {
-    return (<h1>About</h1>);
-  }
-}
+const RouteWithSubRoutes = (route) => (
+  <Route {...route.props} path={route.path} render={props => (
+    // pass the sub-routes down to keep nesting
+    <route.component {...props} routes={route.routes}/>
+  )}/>
+);
 
 class App extends preact.Component {
   static get propTypes() {
@@ -34,30 +30,27 @@ class App extends preact.Component {
   }
 
   render() {
-    let maxWidth = 12;
-
     return (
       <Router>
         <Container fluid={true}>
-          <Route>
-            {(match) => <HeaderRow match={match} title={Config.title} />}
-
-          </Route>
-          <Row>
-            <Col lg={{size: maxWidth}}>
-              <Container className={styles.contentBody}>
-                <div className='top-content'><p>Lorem Ipsum</p></div>
-              </Container>
-
-              <Route exact path="/" render={() => <h1>Home</h1>}/>
-              <Route path="/about" component={About}/>
-              <Route path="/repos" component={Repos}/>
+          <Row className={`${styles.header} justify-content-between`}>
+            <Col xs="auto">
+              <p>Dashboard</p>
+            </Col>
+            <Col xs="auto">
+              <p>Other Stuff</p>
             </Col>
           </Row>
           <Row>
-            <Col lg={{size: maxWidth}}>
-              <Container className={styles.footerBody}>
-              </Container>
+            <Col xs="auto" md="auto">
+              <Nav routes={config.routes}/>
+            </Col>
+            <Col sm="auto">
+              {
+                config.routes.map((route, i) =>
+                  <RouteWithSubRoutes key={i} {...route} />
+                )
+              }
             </Col>
           </Row>
         </Container>

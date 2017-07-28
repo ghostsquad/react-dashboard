@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 
 import App from '_/app';
 
+import '_/index.css';
+
 // -------------------------------------------------------------------------- //
 
 const reducer = (state = {}, action) => {

@@ -42,7 +42,7 @@ module.exports = {
     'object-shorthand': ['error', 'always'],
     'rest-spread-spacing': ['error', 'never'],
     'consistent-return': ['error'],
-    'prefer-destructuring': ['error', { array: true, object: true }, { enforceForRenamedProperties: true }],
+    'prefer-destructuring': ['off', { array: true, object: true }, { enforceForRenamedProperties: true }],
     'prefer-promise-reject-errors': ['error'],
     'prefer-rest-params': ['error'],
     'prefer-spread': ['error'],
