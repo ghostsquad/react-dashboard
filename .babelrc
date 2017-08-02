@@ -5,6 +5,7 @@
     "stage-3"
   ],
   "plugins": [
-    ["transform-react-jsx", { "pragma": "preact.h" }]
+    ["transform-react-jsx", { "pragma": "preact.h" }],
+    ["lodash", { "id": ["lodash", "semantic-ui-react"] }]
   ]
 }

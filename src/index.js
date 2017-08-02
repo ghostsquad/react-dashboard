@@ -1,25 +1,25 @@
+// This is our entry point
+// It is in charge of
+//  * creating the store
+//  * hooking up our root reducer to the store
+//  * and hooking up to document body
+
 import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
 import preact from 'preact';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-import App from '_/app';
+import { App, appReducer } from '_/scenes/app';
 
+// CSS ---------------------------------------------------------------------- //
+
+import '_static/semantic.paper.css';
 import '_/index.css';
 
 // -------------------------------------------------------------------------- //
 
-const reducer = (state = {}, action) => {
-  if (action) {
-    return state;
-  }
-
-  return state;
-};
-
-const store = createStore(reducer);
+const store = createStore(appReducer);
 
 const provider = (
   <Provider store={store}>

@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 const modulesDirectory = path.resolve(__dirname, 'node_modules');
@@ -34,7 +33,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: modulesDirectory,
         enforce: 'pre',
         use: [
           {
@@ -62,31 +61,25 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: /node_modules/,
+        include: [
+          modulesDirectory,
+          staticDirectory
+        ],
         use: [
           {
             loader: 'style-loader'
           },
           {
             loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'resolve-url-loader'
           }
         ]
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
+        exclude: [
+          modulesDirectory,
+          staticDirectory
+        ],
         use: [
           {
             loader: 'style-loader'
@@ -115,6 +108,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.json', '.css', '.jpeg', '.jpg', '.png', '.gif', '.svg'],
     alias: {
       '_': sourceDirectory,
+      '_static': staticDirectory,
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     },
@@ -128,7 +122,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: staticDirectory,
-        to: './'
+        to: distDirectory
       }
     ]),
     new HtmlWebpackPlugin({

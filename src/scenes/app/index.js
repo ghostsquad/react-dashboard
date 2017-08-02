@@ -1,33 +1,31 @@
+// App is the root component that renders all scenes
+
+import preact from 'preact';
+
 import {
   Col,
   Container,
   Row
 } from 'reactstrap';
 
-import Nav from '_/components/nav';
-import PropTypes from '_/proptypes';
-import preact from 'preact';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+
+import Nav from '_/components/nav';
+import RouteWithSubRoutes from '_/containers/route_with_sub_routes';
+
+import appReducer from './reducer';
 
 import config from '_/config';
 
-import styles from './app.css';
+// CSS ---------------------------------------------------------------------- //
+
+import styles from './index.css';
 
 // -------------------------------------------------------------------------- //
 
-const RouteWithSubRoutes = (route) => (
-  <Route {...route.props} path={route.path} render={props => (
-    // pass the sub-routes down to keep nesting
-    <route.component {...props} routes={route.routes}/>
-  )}/>
-);
-
 class App extends preact.Component {
-  static get propTypes() {
-    return {
-      ...super.propTypes,
-    };
-  }
 
   render() {
     return (
@@ -42,8 +40,12 @@ class App extends preact.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs="auto" md="auto">
-              <Nav routes={config.routes}/>
+            <Col xs="2">
+              <Route>
+                {(match) =>
+                  <Nav routes={config.routes} match={match}/>
+                }
+              </Route>
             </Col>
             <Col sm="auto">
               {
@@ -64,3 +66,4 @@ App.childContextTypes = {
 };
 
 export default App;
+export { App, appReducer };
