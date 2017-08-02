@@ -1,8 +1,6 @@
 import preact from 'preact';
 
-import {
-  Container,
-} from 'reactstrap';
+//import { Container } from 'reactstrap';
 
 //import { Link, Route } from 'react-router-dom';
 
@@ -18,9 +16,9 @@ class ThreeSixty extends preact.Component {
   render() {
 
     return (
-      <Container>
+      <div>
         <h1>360</h1>
-      </Container>
+      </div>
     );
   }
 }

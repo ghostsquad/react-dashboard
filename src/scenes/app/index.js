@@ -8,16 +8,13 @@ import {
   Row
 } from 'reactstrap';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import appReducer from './reducer';
+import config from '_/config';
 import Nav from './components/nav';
 import RouteWithSubRoutes from '_/containers/route_with_sub_routes';
-
-import appReducer from './reducer';
-
-import config from '_/config';
 
 // CSS ---------------------------------------------------------------------- //
 
@@ -26,37 +23,34 @@ import styles from './index.css';
 // -------------------------------------------------------------------------- //
 
 class App extends preact.Component {
-
   render() {
     return (
-      <Router>
-        <Container fluid={true}>
-          <Row className={`${styles.header} justify-content-between`}>
-            <Col xs="auto">
-              <p>Dashboard</p>
-            </Col>
-            <Col xs="auto">
-              <p>Other Stuff</p>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs="2">
-              <Route>
-                {(match) =>
-                  <Nav routes={config.routes} match={match}/>
-                }
-              </Route>
-            </Col>
-            <Col sm="auto">
-              {
-                config.routes.map((route, i) =>
-                  <RouteWithSubRoutes key={i} route={route} />
-                )
+      <Container fluid={true}>
+        <Row className={`${styles.header} justify-content-between`}>
+          <Col xs="auto">
+            <p>Dashboard</p>
+          </Col>
+          <Col xs="auto">
+            <p>Other Stuff</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={2} className={styles.sidebar}>
+            <Route>
+              {(match) =>
+                <Nav routes={config.routes} match={match}/>
               }
-            </Col>
-          </Row>
-        </Container>
-      </Router>
+            </Route>
+          </Col>
+          <Col sm={10}>
+            {
+              config.routes.map((route, i) =>
+                <RouteWithSubRoutes key={i} route={route} />
+              )
+            }
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

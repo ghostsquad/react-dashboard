@@ -1,16 +1,13 @@
-import actions from '_/enums/actions';
+import { combineReducers } from 'redux';
 
-const appReducer = (state = {}, action) => {
-  const { type, payload } = action;
+import mediaReducer from './media_reducer';
+import routeReducer from './route_reducer';
 
-  if (type === actions.mediaChanged) {
-    console.log(payload);
-    return state;
-  }
+// -------------------------------------------------------------------------- //
 
-  // For now, don't handle any actions
-  // and just return the state given to us.
-  return state;
-};
+const appReducer = combineReducers({
+  media: mediaReducer,
+  routes: routeReducer
+});
 
 export default appReducer;

@@ -7,8 +7,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import preact from 'preact';
 
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+
+import createHistory from 'history/createBrowserHistory';
+
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
+
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import dispatchMediaQueryChanges from './services/dispatch_media_query_changes';
 
@@ -21,13 +27,30 @@ import '_/index.css';
 
 // -------------------------------------------------------------------------- //
 
-const store = createStore(appReducer);
+const history = createHistory();
+
+// Build the middleware for intercepting and dispatching navigation actions
+const middleware = routerMiddleware(history);
+
+const store = createStore(
+  combineReducers({
+    app: appReducer,
+    router: routerReducer
+  }),
+  /* preloadedState, */
+  composeWithDevTools(
+    applyMiddleware(middleware)
+    // other store enhancers if any
+  )
+);
 
 dispatchMediaQueryChanges(store.dispatch);
 
 const provider = (
   <Provider store={store}>
-    <App/>
+    <ConnectedRouter history={history}>
+      <App/>
+    </ConnectedRouter>
   </Provider>
 );
 
