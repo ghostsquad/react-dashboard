@@ -1,5 +1,10 @@
+import actions from '_/enums/actions';
+
 const appReducer = (state = {}, action) => {
-  if (typeof action === 'undefined') {
+  const { type, payload } = action;
+
+  if (type === actions.mediaChanged) {
+    console.log(payload);
     return state;
   }
 

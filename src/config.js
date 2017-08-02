@@ -1,5 +1,5 @@
-import threeSixty from '_/scenes/360/index';
-import projects from '_/scenes/projects/index';
+import threeSixty from '_/scenes/app/scenes/360/index';
+import projects from '_/scenes/app/scenes/projects/index';
 
 // -------------------------------------------------------------------------- //
 

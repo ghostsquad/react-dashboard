@@ -10,6 +10,8 @@ import preact from 'preact';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+import dispatchMediaQueryChanges from './services/dispatch_media_query_changes';
+
 import { App, appReducer } from '_/scenes/app';
 
 // CSS ---------------------------------------------------------------------- //
@@ -20,6 +22,8 @@ import '_/index.css';
 // -------------------------------------------------------------------------- //
 
 const store = createStore(appReducer);
+
+dispatchMediaQueryChanges(store.dispatch);
 
 const provider = (
   <Provider store={store}>

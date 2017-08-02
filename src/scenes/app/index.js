@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
-import Nav from '_/components/nav';
+import Nav from './components/nav';
 import RouteWithSubRoutes from '_/containers/route_with_sub_routes';
 
 import appReducer from './reducer';
@@ -50,7 +50,7 @@ class App extends preact.Component {
             <Col sm="auto">
               {
                 config.routes.map((route, i) =>
-                  <RouteWithSubRoutes key={i} {...route} />
+                  <RouteWithSubRoutes key={i} route={route} />
                 )
               }
             </Col>
