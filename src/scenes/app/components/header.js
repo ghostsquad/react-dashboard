@@ -1,23 +1,23 @@
 import preact from 'preact';
-import { Col } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 
 // CSS ---------------------------------------------------------------------- //
 
-//import styles from './header.css';
+import styles from './header.css';
 
 // -------------------------------------------------------------------------- //
 
 class Header extends preact.Component {
   render() {
     return (
-      <div>
+      <Row className={`${styles.row} justify-content-between`}>
         <Col xs="auto">
           <p>Dashboard</p>
         </Col>
         <Col xs="auto">
           <p>Other Stuff</p>
         </Col>
-      </div>
+      </Row>
     );
   }
 }

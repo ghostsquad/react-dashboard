@@ -1,5 +1,3 @@
-@media (min-width: 576px) {
-    .sidebar {
-        max-width: 180px;
-    }
+.sidebar {
+    max-width: 180px;
 }

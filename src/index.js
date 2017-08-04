@@ -37,14 +37,6 @@ const store = createStore(
     app: appReducer,
     router: routerReducer
   }),
-  {
-    app: {
-      dimensions: {
-        sidebar: 2,
-        content: 10
-      }
-    }
-  },
   composeWithDevTools(
     applyMiddleware(middleware)
     // other store enhancers if any

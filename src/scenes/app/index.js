@@ -30,9 +30,7 @@ class App extends preact.Component {
   render() {
     return (
       <Container fluid={true}>
-        <Row className={`${styles.header} justify-content-between`}>
-          <Header />
-        </Row>
+        <Header/>
         <Row>
           <Sidebar xs="auto" className={styles.sidebar}>
             <Route>

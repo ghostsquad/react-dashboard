@@ -10,7 +10,6 @@ const mediaReducer = (state = {}, action) => {
     mediaState[payload.bootstrapClass] = payload;
 
     const newState = Object.assign({}, {...state}, mediaState);
-    console.log(newState);
     return newState;
   }
 
