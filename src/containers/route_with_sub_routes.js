@@ -1,6 +1,8 @@
 import preact from 'preact';
 import { Route } from 'react-router-dom';
 
+// -------------------------------------------------------------------------- //
+
 class RouteWithSubRoutes extends preact.Component {
   render(props) {
     const { route } = props;

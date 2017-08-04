@@ -2,9 +2,3 @@
     background-color: #4c4f52;
     color: #ffffff;
 }
-
-@media (min-width: 576px) {
-    .sidebar {
-        max-width: 280px;
-    }
-}

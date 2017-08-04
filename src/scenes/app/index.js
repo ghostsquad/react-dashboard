@@ -3,7 +3,6 @@
 import preact from 'preact';
 
 import {
-  Col,
   Container,
   Row
 } from 'reactstrap';
@@ -16,39 +15,39 @@ import config from '_/config';
 import Nav from './components/nav';
 import RouteWithSubRoutes from '_/containers/route_with_sub_routes';
 
+import Header from './components/header';
+import Sidebar from './components/sidebar';
+import Content from './components/content';
+
 // CSS ---------------------------------------------------------------------- //
 
 import styles from './index.css';
 
 // -------------------------------------------------------------------------- //
 
+
 class App extends preact.Component {
   render() {
     return (
       <Container fluid={true}>
         <Row className={`${styles.header} justify-content-between`}>
-          <Col xs="auto">
-            <p>Dashboard</p>
-          </Col>
-          <Col xs="auto">
-            <p>Other Stuff</p>
-          </Col>
+          <Header />
         </Row>
         <Row>
-          <Col sm={2} className={styles.sidebar}>
+          <Sidebar xs="auto" className={styles.sidebar}>
             <Route>
               {(match) =>
                 <Nav routes={config.routes} match={match}/>
               }
             </Route>
-          </Col>
-          <Col sm={10}>
+          </Sidebar>
+          <Content>
             {
               config.routes.map((route, i) =>
                 <RouteWithSubRoutes key={i} route={route} />
               )
             }
-          </Col>
+          </Content>
         </Row>
       </Container>
     );
